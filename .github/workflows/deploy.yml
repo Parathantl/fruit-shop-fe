@@ -30,6 +30,7 @@ jobs:
           git config --global user.name "parathantl"
 
       - name: Deploy to GitHub Pages
-        run: npm run deploy
-        env:
-          GH_TOKEN: ${{ secrets.TOKEN }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
