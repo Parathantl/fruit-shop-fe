@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 const SignupPage = () => {
   // State to store form values
@@ -21,7 +21,7 @@ const SignupPage = () => {
   });
 
   // Handle input change
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
