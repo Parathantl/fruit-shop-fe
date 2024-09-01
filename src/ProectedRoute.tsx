@@ -1,22 +1,20 @@
-// src/ProtectedRoute.tsx
+// src/components/ProtectedRoute.tsx
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { getCookie } from "./utils/cookieUtil";
+import { useAuth } from "./context/AuthContext";
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
+  element: React.ReactElement;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const jwtToken = getCookie("jwt");
-  console.log("jwt tOKEN::", jwtToken);
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
+  const { isAuthenticated } = useAuth();
 
-  if (!jwtToken) {
-    // If JWT token is not found, redirect to the signup page
-    return <Navigate to="/signup" replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/signin" replace />;
   }
 
-  return <>{children}</>;
+  return element;
 };
 
 export default ProtectedRoute;

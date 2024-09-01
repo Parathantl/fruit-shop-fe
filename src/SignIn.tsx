@@ -1,8 +1,18 @@
-// src/SignInPage.tsx
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useAuth } from "./context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignIn: React.FC = () => {
+  const { isAuthenticated, login } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/products");
+    }
+  }, [isAuthenticated, navigate]);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -49,20 +59,24 @@ const SignIn: React.FC = () => {
 
     if (validate()) {
       console.log("Form submitted with data:", formData);
-      alert("Sign in successful!");
-      const response = await axios.post("http://localhost:3000/api/v1/users/login", formData, 
-      { withCredentials: true } 
-      );
-      console.log(response.data);
-      // Reset form fields after successful submission
-      setFormData({
-        email: "",
-        password: "",
-      });
-      setErrors({
-        email: "",
-        password: "",
-      });
+
+      try {
+        
+        await login(formData.email, formData.password)
+  
+        // Reset form fields after successful submission
+        setFormData({
+          email: "",
+          password: "",
+        });
+        setErrors({
+          email: "",
+          password: "",
+        });
+      } catch (error) {
+        console.error("Error signing in:", error);
+        toast.error(error.response?.data?.message || "An error occurred");
+      }
     }
   };
 

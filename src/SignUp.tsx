@@ -1,7 +1,17 @@
-import axios from "axios";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 
 const SignupPage = () => {
+  const { isAuthenticated, signup } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/products");
+    }
+  }, [isAuthenticated, navigate]);
+
   // State to store form values
   const [formData, setFormData] = useState({
     username: "",
@@ -84,9 +94,8 @@ const SignupPage = () => {
     if (validate()) {
       console.log("Form submitted with data:", formData);
       // Perform your form submission logic here, e.g., send data to backend
-      const response = await axios.post("http://localhost:3000/api/v1/users", formData);
-      console.log(response);
-      alert("Form submitted successfully!");
+      await signup(formData.username, formData.email, formData.password, formData.address, formData.phone);
+
       // Reset form data
       setFormData({
         username: "",
@@ -219,6 +228,7 @@ const SignupPage = () => {
             Sign Up
           </button>
         </form>
+
       </div>
     </div>
   );

@@ -32,6 +32,9 @@ const Header = () => {
           <Link to="/contact" className="text-gray-700 hover:text-blue-500 transition">
             Contact Us
           </Link>
+          <Link to="/signin" className="text-gray-700 hover:text-blue-500 transition">
+            Sign In
+          </Link>
           <Link to="/signup" className="text-gray-700 hover:text-blue-500 transition">
             Sign Up
           </Link>
