@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 
 const Header = () => {
   // State to manage mobile menu visibility
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   // Function to toggle the mobile menu
   const toggleMobileMenu = () => {
@@ -32,12 +34,22 @@ const Header = () => {
           <Link to="/contact" className="text-gray-700 hover:text-blue-500 transition">
             Contact Us
           </Link>
+{    !isAuthenticated &&      <>
           <Link to="/signin" className="text-gray-700 hover:text-blue-500 transition">
             Sign In
           </Link>
           <Link to="/signup" className="text-gray-700 hover:text-blue-500 transition">
             Sign Up
           </Link>
+          </>
+          }
+          {
+            isAuthenticated && (
+              <Link to="/logout" className="text-gray-700 hover:text-blue-500 transition">
+                Logout
+              </Link>
+            )
+          }
         </nav>
 
         {/* Mobile Menu Button */}

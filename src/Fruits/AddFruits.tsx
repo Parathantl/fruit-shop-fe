@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useFruit } from "../context/FruitContext";
 
 const AddFruit: React.FC = () => {
+  const { addFruit } = useFruit();
+
   const [formData, setFormData] = useState({
     productName: "",
     description: "",
@@ -61,10 +64,11 @@ const AddFruit: React.FC = () => {
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
       console.log("Form submitted with data:", formData);
+      await addFruit(formData);
       // Add your submission logic here (e.g., send data to backend)
       setFormData({
         productName: "",

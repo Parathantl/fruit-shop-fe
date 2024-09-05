@@ -1,16 +1,8 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 
 const SignupPage = () => {
-  const { isAuthenticated, signup } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/products");
-    }
-  }, [isAuthenticated, navigate]);
+  const { signup } = useAuth();
 
   // State to store form values
   const [formData, setFormData] = useState({

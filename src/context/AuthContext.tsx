@@ -30,14 +30,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Check for the existence of the JWT cookie when the component mounts
     const checkAuth = async () => {
       try {
-        const response = await axios.get("/api/auth/check", {
+        const response = await axios.get("http://localhost:3000/api/v1/auth/check", {
           withCredentials: true,
         });
         if (response.data.authenticated) {
           setIsAuthenticated(true);
         }
       } catch (error) {
-        setIsAuthenticated(false);
+        console.log(error);
+        // setIsAuthenticated(false);
         console.error("Authentication check failed:", error);
       }
     };
