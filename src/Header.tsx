@@ -34,6 +34,9 @@ const Header = () => {
           <Link to="/contact" className="text-gray-700 hover:text-blue-500 transition">
             Contact Us
           </Link>
+          <Link to="/cart" className="text-gray-700 hover:text-blue-500 transition">
+            Cart
+          </Link>
 {    !isAuthenticated &&      <>
           <Link to="/signin" className="text-gray-700 hover:text-blue-500 transition">
             Sign In
